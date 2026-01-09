@@ -1,4 +1,5 @@
 function validateForm(event){
+    event.preventDefault();
     const form = event.target;
     console.log(form);
     console.log(event);
