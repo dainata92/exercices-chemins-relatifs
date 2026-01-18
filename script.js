@@ -5,42 +5,58 @@ function validateForm(event){
     console.log(event);
 
     const data = new FormData(form);
-    const adresseActuelle = data.get("adresseActuelle");
-    const lien = data.get("lien");
-    const adresseDestination = data.get("adresseDestination");
+    const cheminActuel = data.get("adresseActuelle");
+    const cheminLien = data.get("lien");
+    const cheminDestination = data.get("adresseDestination");
+    if (cheminDestination != calculCheminRelatif(cheminActuel, cheminLien)){
+        console.error(
+            "test de calculCheminRelatif: résultat innatendu"
+        )
+    }
+}
 
-    //transforme le texte en liste
-    const listeAdresseActuelle = adresseActuelle.split("/");
-    //enleve le dernier fichier
-    listeAdresseActuelle.pop();
-    const listeLien = lien.split("/");
-    const listeAdresseDestination = adresseDestination.split("/");
-    //on parcourt chaque element de la liste pour voir si l'utilisateur mets ".."
-    listeLien.forEach((element) => {
-        if (element === ".."){
-            //si oui, on enleve le dernier dossier
-            listeAdresseActuelle.pop();
-        }
-        else {
-            //sinon, on le rajoute
-            listeAdresseActuelle.push(element);
-        }
+function calculCheminRelatif(cheminActuel, cheminLien){
+    const chaine = cheminActuel.split("/"); 
+    if (!cheminActuel.endsWith("/")) {
+        chaine.pop();
     }
-    )
+    const base = chaine.join("/"); 
+        const final = base + "/" + cheminLien; 
+        return final;
+}
+const valeursDeTest = [
+    {
+        actuel: "/",
+        lien: "test",
+        attendu: "/test",
+    },
+    {
+        actuel: "/test/lol",
+        lien: "re-test",
+        attendu: "/test/re-test",
+    },
+    {
+        actuel: "/test/lol/",
+        lien: "re-test",
+        attendu: "/test/lol/re-test",
+    },
+    {
+        actuel: "/test",
+        lien: "lol/re-test",
+        attendu: "/lol/re-test",
+    },
+]
+for (const test of valeursDeTest) {
+    const resultat = calculCheminRelatif(test.actuel, test.lien);
 
-    //la j'ai du mal, je ne pense pas que mon code soit bon
-    //je ne sais pas pourquoi
-    if (listeAdresseActuelle.length != listeAdresseDestination.length){
-        console.log("Faux");
+    if (resultat != test.attendu) {
+        console.error(
+            "test de calculCheminRelatif: résultat innatendu",
+            resultat,
+            test,
+        )
     }
-    for(let i=0; i<listeAdresseActuelle.length;i++){
-        if (listeAdresseActuelle[i] != listeAdresseDestination[i]){
-            console.log("Faux")
-        }
-    }
-    console.log("Vrai");
     }
 const formulaire = document.getElementById("form");
 formulaire.onsubmit = validateForm;
-console.log("Bonjour");
 
