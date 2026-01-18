@@ -16,13 +16,14 @@ function validateForm(event){
 }
 
 function calculCheminRelatif(cheminActuel, cheminLien){
-    const chaine = cheminActuel.split("/"); 
-    if (!cheminActuel.endsWith("/")) {
-        chaine.pop();
+    if (cheminLien.startsWith("/")){
+        return cheminLien;
     }
+    const chaine = cheminActuel.split("/"); 
+    chaine.pop();
     const base = chaine.join("/"); 
-        const final = base + "/" + cheminLien; 
-        return final;
+    const final = base + "/" + cheminLien; 
+    return final;
 }
 const valeursDeTest = [
     {
@@ -45,6 +46,11 @@ const valeursDeTest = [
         lien: "lol/re-test",
         attendu: "/lol/re-test",
     },
+     {
+        actuel: "/test",
+        lien: "/lol/re-test",
+        attendu: "/lol/re-test",
+    },
 ]
 for (const test of valeursDeTest) {
     const resultat = calculCheminRelatif(test.actuel, test.lien);
@@ -57,6 +63,7 @@ for (const test of valeursDeTest) {
         )
     }
     }
+console.log("Fin de test");
 const formulaire = document.getElementById("form");
 formulaire.onsubmit = validateForm;
 
