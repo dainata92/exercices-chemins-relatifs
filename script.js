@@ -15,15 +15,32 @@ function validateForm(event){
     }
 }
 
-function calculCheminRelatif(cheminActuel, cheminLien){
+function calculCheminRelatif(cheminDepart, cheminLien){
     if (cheminLien.startsWith("/")){
         return cheminLien;
     }
-    const chaine = cheminActuel.split("/"); 
-    chaine.pop();
-    const base = chaine.join("/"); 
-    const final = base + "/" + cheminLien; 
-    return final;
+    const depart = cheminDepart.split("/");
+    const elements = cheminLien.split("/");
+    
+    if(!cheminDepart.endsWith("/")){
+        depart.pop();
+    }
+
+    if (cheminLien.startsWith("..")){
+        depart.pop();
+        for (const element of elements){
+            if(element !== ".."){
+                depart.push(element);
+            }
+        }
+    }
+    else{
+        for (const element of elements){
+            depart.push(element);
+        }
+    }
+    const resultat = depart.join("/");
+    return resultat;
 }
 const valeursDeTest = [
     {
