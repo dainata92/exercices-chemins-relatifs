@@ -8,10 +8,17 @@ function validateForm(event){
     const cheminActuel = data.get("adresseActuelle");
     const cheminLien = data.get("lien");
     const cheminDestination = data.get("adresseDestination");
+    const resultat = document.getElementById("resultat");
+
     if (cheminDestination != calculCheminRelatif(cheminActuel, cheminLien)){
         console.error(
             "test de calculCheminRelatif: résultat innatendu"
         )
+        resultat.innerText="Erreur";
+    }
+    else{
+        //alert("Bravo");
+        resultat.innerText="Bravo";
     }
 }
 
