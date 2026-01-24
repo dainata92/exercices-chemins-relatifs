@@ -47,6 +47,20 @@ function calculCheminRelatif(cheminDepart, cheminLien){
     return cheminActuel.join("/");
 
 }
+
+function nouvelExercice(){
+    const index=Math.floor(Math.random()*valeursDeTest.length);
+    const exercice = valeursDeTest[index];
+    const cheminActuel = document.getElementById("adresseActuelle");
+    cheminActuel.value = exercice.actuel; 
+    const cheminLien = document.getElementById("lien");
+    cheminLien.value = exercice.lien;
+    const cheminDestination = document.getElementById("adresseDestination");
+    cheminDestination.value="";
+    const resultat = document.getElementById("resultat");
+    resultat.innerText="";
+}
+
 const valeursDeTest = [
     {
         actuel: "/",
@@ -98,4 +112,6 @@ for (const test of valeursDeTest) {
 console.log("Fin de test");
 const formulaire = document.getElementById("form");
 formulaire.onsubmit = validateForm;
+const nouvelExerciceBouton = document.getElementById("nouvelExercice");
+nouvelExerciceBouton.onclick = nouvelExercice;
 
