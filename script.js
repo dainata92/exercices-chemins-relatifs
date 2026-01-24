@@ -19,28 +19,26 @@ function calculCheminRelatif(cheminDepart, cheminLien){
     if (cheminLien.startsWith("/")){
         return cheminLien;
     }
-    const depart = cheminDepart.split("/");
-    const elements = cheminLien.split("/");
+    const cheminActuel = cheminDepart.split("/");
+    //on veut etre dans le dossier actuel, pas dans le fichier actuel
+    //meme si le cheminDepart fini par "/",
+    //le resultat de split va avoir un dernier element vide a enlever
+    //"/etc/".split("/") => ['', 'etc', '']
+    cheminActuel.pop();
     
-    if(!cheminDepart.endsWith("/")){
-        depart.pop();
+    console.log(cheminActuel);
+    for(const element of cheminLien.split("/")){
+        if (element == ".."){
+            //on remonte au dossier parent
+            cheminActuel.pop();
+        }
+        else {
+            cheminActuel.push(element);
+        }
+    console.log(cheminActuel);
     }
+    return cheminActuel.join("/");
 
-    if (cheminLien.startsWith("..")){
-        depart.pop();
-        for (const element of elements){
-            if(element !== ".."){
-                depart.push(element);
-            }
-        }
-    }
-    else{
-        for (const element of elements){
-            depart.push(element);
-        }
-    }
-    const resultat = depart.join("/");
-    return resultat;
 }
 const valeursDeTest = [
     {
@@ -67,6 +65,16 @@ const valeursDeTest = [
         actuel: "/test",
         lien: "/lol/re-test",
         attendu: "/lol/re-test",
+    },
+     {
+        actuel: "/etc/apache/",
+        lien: "../original/atc.html",
+        attendu: "/etc/original/atc.html",
+    }, 
+    {
+        actuel: "/etc/apache/",
+        lien: "hello/../original/atc.html",
+        attendu: "/etc/apache/original/atc.html",
     },
 ]
 for (const test of valeursDeTest) {
