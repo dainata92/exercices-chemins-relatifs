@@ -4,20 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Exercices chemins relatifs</title>
+    <link rel="stylesheet" href="style.css"> 
 </head>
 <body>
     <h1>Exercices chemins relatifs</h1>
     <button id="nouvelExercice">Nouvel Exercice</button>
     <form action="" method="get" class="form-example" id="form">
-        <div class="form-example">
-            <label for="adresseActuelle">Entrez le chemin actuel </label>
-            <input type="text" name="adresseActuelle" id="adresseActuelle" required />
+        <div class="haut">
+            <div class="form-example">
+                <label for="adresseActuelle">Entrez le chemin actuel </label>
+                <input type="text" name="adresseActuelle" id="adresseActuelle" required />
+            </div>
+            <div class="form-example">
+                <label for="lien">Entrez votre lien</label>
+                <input type="text" name="lien" id="lien" required />
+            </div>
         </div>
-        <div class="form-example">
-            <label for="lien">Entrez votre lien</label>
-            <input type="text" name="lien" id="lien" required />
-        </div>
-        <div class="form-example">
+        <div class="bas">
             <label for="adresseDestination">Entrez le chemin de destination</label>
             <input type="text" name="adresseDestination" id="adresseDestination" required />
         </div>
