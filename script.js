@@ -97,6 +97,22 @@ const valeursDeTest = [
         lien: "hello/../original/atc.html",
         attendu: "/etc/apache/original/atc.html",
     },
+    {
+        actuel: "/a/b/c/d",
+        lien: "../../e/f",
+        attendu: "/a/e/f"
+    },
+
+    {
+        actuel: "/a/b/c/",
+        lien: "../../../x",
+        attendu: "/x"
+    },
+    {
+        actuel: "/folder/",
+        lien: "a/b/../../c",
+        attendu: "/folder/c"
+    }
 ]
 for (const test of valeursDeTest) {
     const resultat = calculCheminRelatif(test.actuel, test.lien);
