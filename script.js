@@ -1,8 +1,8 @@
 function validateForm(event){
     event.preventDefault();
     const form = event.target;
-    console.log(form);
-    console.log(event);
+    //console.log(form);
+    //console.log(event);
 
     const data = new FormData(form);
     const cheminActuel = data.get("adresseActuelle");
@@ -33,7 +33,7 @@ function calculCheminRelatif(cheminDepart, cheminLien){
     //"/etc/".split("/") => ['', 'etc', '']
     cheminActuel.pop();
     
-    console.log(cheminActuel);
+    //console.log(cheminActuel);
     for(const element of cheminLien.split("/")){
         if (element == ".."){
             //on remonte au dossier parent
@@ -42,7 +42,7 @@ function calculCheminRelatif(cheminDepart, cheminLien){
         else {
             cheminActuel.push(element);
         }
-    console.log(cheminActuel);
+    //console.log(cheminActuel);
     }
     return cheminActuel.join("/");
 
@@ -130,4 +130,49 @@ const formulaire = document.getElementById("form");
 formulaire.onsubmit = validateForm;
 const nouvelExerciceBouton = document.getElementById("nouvelExercice");
 nouvelExerciceBouton.onclick = nouvelExercice;
+
+function explication(cheminActuel,cheminLien,cheminDestination){
+    return [
+            "Le chemin actuel est composé d'un dossier /test suivi par un fichier lol",
+            "Le lien est composé d'un fichier re-test",
+            "Le fichier re-test supprime le fichier lol et le fichier re-test sera placé dans le dossier /test",
+        ];
+}
+/**
+ * 
+ * @param {string[]} a 
+ * @param {string[]} b 
+ * @returns 
+ */
+function differenceTableau(a,b){
+    if (a.length != b.length){
+        return "Resultat n'a pas la longueur attendue";
+    }
+    //si on atteint cet endroit du code, les deux tableaux ont la meme longueur
+    for(let i=0; i<a.length;i++){
+        if (a[i] != b[i]){
+            return `Element ${i} pas egal`;
+        }
+    }
+}
+const valeursTestExplication = [
+    {
+        actuel: "/test/lol",
+        lien: "re-test",
+        destination: "/test/re-test",
+        resultatAttendu: [
+            "Le chemin actuel est composé d'un dossier /test suivi par un fichier lol",
+            "Le lien est composé d'un fichier re-test",
+            "Le fichier re-test supprime le fichier lol et le fichier re-test sera placé dans le dossier /test",
+        ]
+    }
+]
+for (const test of valeursTestExplication) {
+    const resultat = explication(test.actuel, test.lien, test.destination);
+    const difference = differenceTableau(resultat,test.resultatAttendu);
+    if (difference) {
+        console.error(difference);
+    }
+    }
+    
 
